@@ -1,0 +1,39 @@
+# サンプルGraphQLスキーマ
+# 実際のプロジェクトでは、バックエンドサーバーのスキーマを使用してください
+
+type Query {
+  # サンプルクエリ
+  sampleData: SampleData
+  users: [User!]!
+  user(id: ID!): User
+}
+
+type Mutation {
+  # サンプルミューテーション
+  createSample(input: CreateSampleInput!): SampleData
+  createUser(input: CreateUserInput!): User
+}
+
+type SampleData {
+  id: ID!
+  title: String!
+  content: String!
+  createdAt: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  createdAt: String!
+}
+
+input CreateSampleInput {
+  title: String!
+  content: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+}

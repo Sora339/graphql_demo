@@ -1,95 +1,260 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Box } from '@/components/ui/Box';
+import { Button } from '@/components/ui/Button';
+import { getSampleData, createSampleAction } from './actions';
+import {
+  pageContainer,
+  contentCard,
+  section
+} from './page.css';
 
-export default function Home() {
+export default async function Home() {
+  // Server ComponentsでGraphQLデータを取得（デモ用）
+  const sampleData = await getSampleData();
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Box
+      className={pageContainer}
+      p={6}
+    >
+      <Box
+        className={contentCard}
+      >
+        <Box as="header" mb={8} textAlign="center">
+          <Box
+            as="h1"
+            fontSize="3xl"
+            color="gray-800"
+            mb={2}
+          >
+            ジャンプTOON スタック デモ
+          </Box>
+          <Box
+            as="p"
+            fontSize="lg"
+            color="gray-600"
+          >
+            Next.js + GraphQL + vanilla-extract + Storybook + Chromatic
+          </Box>
+        </Box>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {/* 技術スタック紹介 */}
+        <Box className={section}>
+          <Box as="h2" fontSize="xl" color="gray-800" mb={4}>
+            🛠️ 採用技術
+          </Box>
+          <Box as="ul" color="gray-700">
+            <Box as="li" mb={2}>
+              <Box as="strong">Next.js 15</Box> - React Server Components & App Router
+            </Box>
+            <Box as="li" mb={2}>
+              <Box as="strong">GraphQL + urql</Box> - サーバー間通信
+            </Box>
+            <Box as="li" mb={2}>
+              <Box as="strong">vanilla-extract + Sprinkles</Box> - 型安全なCSS-in-JS
+            </Box>
+            <Box as="li" mb={2}>
+              <Box as="strong">Storybook</Box> - コンポーネント開発・テスト
+            </Box>
+            <Box as="li" mb={2}>
+              <Box as="strong">Chromatic</Box> - ビジュアルリグレッションテスト
+            </Box>
+            <Box as="li" mb={2}>
+              <Box as="strong">Fastly</Box> - CDN & キャッシュ戦略
+            </Box>
+          </Box>
+        </Box>
+
+        {/* vanilla-extract デモ */}
+        <Box className={section}>
+          <Box as="h2" fontSize="xl" color="gray-800" mb={4}>
+            🎨 vanilla-extract + Sprinkles デモ
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            mb={4}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
+            <Button variant="primary" size="sm">
+              Primary Small
+            </Button>
+            <Button variant="secondary" size="md">
+              Secondary Medium
+            </Button>
+            <Button variant="primary" size="lg">
+              Primary Large
+            </Button>
+          </Box>
+          
+          <Box
+            p={4}
+            backgroundColor="blue-50"
+            borderRadius="md"
+            mb={4}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <Box color="blue-800" fontSize="sm">
+              このボックスはSprinklesのStyle Propsを使用して作成されています
+            </Box>
+          </Box>
+
+          <Box
+            display="grid"
+            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}
+          >
+            <Box
+              p={3}
+              backgroundColor="blue-100"
+              borderRadius="base"
+              textAlign="center"
+              color="blue-800"
+              fontSize="sm"
+            >
+              blue-100
+            </Box>
+            <Box
+              p={3}
+              backgroundColor="blue-200"
+              borderRadius="base"
+              textAlign="center"
+              color="blue-800"
+              fontSize="sm"
+            >
+              blue-200
+            </Box>
+            <Box
+              p={3}
+              backgroundColor="blue-300"
+              borderRadius="base"
+              textAlign="center"
+              color="blue-800"
+              fontSize="sm"
+            >
+              blue-300
+            </Box>
+            <Box
+              p={3}
+              backgroundColor="blue-400"
+              borderRadius="base"
+              textAlign="center"
+              color="blue-800"
+              fontSize="sm"
+            >
+              blue-400
+            </Box>
+          </Box>
+        </Box>
+
+        {/* GraphQL デモ */}
+        <Box className={section}>
+          <Box as="h2" fontSize="xl" color="gray-800" mb={4}>
+            📊 GraphQL データ取得デモ
+          </Box>
+          {sampleData.data ? (
+            <Box>
+              <Box color="gray-600" mb={2}>
+                Server Componentsで取得したサンプルデータ:
+              </Box>
+              <Box as="pre" backgroundColor="gray-100" p={3} borderRadius="base" fontSize="sm">
+                {JSON.stringify(sampleData.data, null, 2)}
+              </Box>
+            </Box>
+          ) : (
+            <Box color="gray-600">
+              データの取得に失敗しました
+            </Box>
+          )}
+        </Box>
+
+        {/* Server Actions デモ */}
+        <Box className={section}>
+          <Box as="h2" fontSize="xl" color="gray-800" mb={4}>
+            ⚡ Server Actions デモ
+          </Box>
+          <form action={createSampleAction}>
+            <Box mb={4}>
+              <Box as="label" display="block" color="gray-700" mb={1}>
+                タイトル:
+              </Box>
+              <Box
+                as="input"
+                name="title"
+                p={2}
+                borderRadius="base"
+                style={{
+                  border: '1px solid #d1d5db',
+                  width: '100%',
+                }}
+                placeholder="サンプルタイトル"
+              />
+            </Box>
+            <Box mb={4}>
+              <Box as="label" display="block" color="gray-700" mb={1}>
+                内容:
+              </Box>
+              <Box
+                as="textarea"
+                name="content"
+                p={2}
+                borderRadius="base"
+                style={{
+                  border: '1px solid #d1d5db',
+                  width: '100%',
+                  minHeight: '80px',
+                }}
+                placeholder="サンプル内容"
+              />
+            </Box>
+            <Button variant="primary" size="md">
+              送信 (Server Action)
+            </Button>
+          </form>
+        </Box>
+
+        {/* 開発ツール */}
+        <Box className={section}>
+          <Box as="h2" fontSize="xl" color="gray-800" mb={4}>
+            🔧 開発ツール
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="row"
+            style={{ gap: '1rem' }}
+          >
+            <Box
+              as="a"
+              href="http://localhost:6006"
+              target="_blank"
+              rel="noopener noreferrer"
+              p={3}
+              backgroundColor="blue-500"
+              color="white"
+              borderRadius="base"
+              textAlign="center"
+              style={{ textDecoration: 'none' }}
+            >
+              📚 Storybook
+            </Box>
+            <Box
+              p={3}
+              backgroundColor="gray-200"
+              color="gray-800"
+              borderRadius="base"
+              textAlign="center"
+            >
+              🎭 Chromatic (設定後)
+            </Box>
+            <Box
+              p={3}
+              backgroundColor="blue-600"
+              color="white"
+              borderRadius="base"
+              textAlign="center"
+            >
+              ⚡ Fastly (プロダクション)
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
