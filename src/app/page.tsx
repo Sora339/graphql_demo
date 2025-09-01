@@ -7,9 +7,26 @@ import {
   section
 } from './page.css';
 
+// 型定義
+interface Sample {
+  id: string;
+  title: string;
+  content: string;
+}
+
+interface SampleData {
+  samples: Sample[];
+}
+
+interface ApiResult {
+  data: SampleData | null;
+  errors: { message: string }[] | null;
+}
+
 export default async function Home() {
   // Server ComponentsでGraphQLデータを取得（デモ用）
-  const sampleData = await getSampleData();
+  const sampleData = await getSampleData() as ApiResult;
+  console.log(sampleData.data)
 
   return (
     <Box
@@ -149,13 +166,19 @@ export default async function Home() {
           <Box as="h2" fontSize="xl" color="gray-800" mb={4}>
             📊 GraphQL データ取得デモ
           </Box>
-          {sampleData.data ? (
+          {sampleData.data?.samples ? (
             <Box>
               <Box color="gray-600" mb={2}>
                 Server Componentsで取得したサンプルデータ:
               </Box>
+              {sampleData.data.samples.map((sample: Sample) => (
+                <Box key={sample.id} mb={2} p={2} backgroundColor="gray-50" borderRadius="base">
+                  <Box as="strong" color="gray-800">{sample.title}</Box>
+                  <Box color="gray-600" fontSize="sm">{sample.content}</Box>
+                </Box>
+              ))}
               <Box as="pre" backgroundColor="gray-100" p={3} borderRadius="base" fontSize="sm">
-                {JSON.stringify(sampleData.data, null, 2)}
+                {JSON.stringify(sampleData.data.samples, null, 2)}
               </Box>
             </Box>
           ) : (

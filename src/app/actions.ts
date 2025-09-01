@@ -2,8 +2,24 @@
 
 import { revalidateTag } from 'next/cache';
 
+// 型定義
+interface Sample {
+  id: string;
+  title: string;
+  content: string;
+}
+
+interface SampleData {
+  samples: Sample[];
+}
+
+interface ApiResult<T = unknown> {
+  data: T | null;
+  errors: { message: string }[] | null;
+}
+
 // シリアライズ可能な結果に変換するヘルパー関数
-function toApiResult<T>(result: { data?: T; error?: Error }) {
+function toApiResult<T>(result: { data?: T; error?: Error }): ApiResult<T> {
   if (result.error) {
     return {
       data: null,
@@ -44,7 +60,7 @@ export async function createSampleAction(formData: FormData) {
 }
 
 // データ取得のServer Action
-export async function getSampleData() {
+export async function getSampleData(): Promise<ApiResult<SampleData>> {
   try {
     // const client = getClient();
     
