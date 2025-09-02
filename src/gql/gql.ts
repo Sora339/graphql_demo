@@ -14,12 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query SampleData {\n    sampleData {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": typeof types.SampleDataDocument,
+    "\n  query GetSamples {\n    samples {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": typeof types.GetSamplesDocument,
+    "\n  query GetSample($id: ID!) {\n    sample(id: $id) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": typeof types.GetSampleDocument,
     "\n  query GetUsers {\n    users {\n      id\n      name\n      email\n      createdAt\n    }\n  }\n": typeof types.GetUsersDocument,
     "\n  mutation CreateSample($input: CreateSampleInput!) {\n    createSample(input: $input) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": typeof types.CreateSampleDocument,
 };
 const documents: Documents = {
-    "\n  query SampleData {\n    sampleData {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": types.SampleDataDocument,
+    "\n  query GetSamples {\n    samples {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": types.GetSamplesDocument,
+    "\n  query GetSample($id: ID!) {\n    sample(id: $id) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": types.GetSampleDocument,
     "\n  query GetUsers {\n    users {\n      id\n      name\n      email\n      createdAt\n    }\n  }\n": types.GetUsersDocument,
     "\n  mutation CreateSample($input: CreateSampleInput!) {\n    createSample(input: $input) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n": types.CreateSampleDocument,
 };
@@ -41,7 +43,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query SampleData {\n    sampleData {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query SampleData {\n    sampleData {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"];
+export function graphql(source: "\n  query GetSamples {\n    samples {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query GetSamples {\n    samples {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetSample($id: ID!) {\n    sample(id: $id) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query GetSample($id: ID!) {\n    sample(id: $id) {\n      id\n      title\n      content\n      createdAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

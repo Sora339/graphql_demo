@@ -3,18 +3,19 @@
 
 type Query {
   # サンプルクエリ
-  sampleData: SampleData
+  samples: [Sample!]!
+  sample(id: ID!): Sample
   users: [User!]!
   user(id: ID!): User
 }
 
 type Mutation {
   # サンプルミューテーション
-  createSample(input: CreateSampleInput!): SampleData
+  createSample(input: CreateSampleInput!): Sample
   createUser(input: CreateUserInput!): User
 }
 
-type SampleData {
+type Sample {
   id: ID!
   title: String!
   content: String!

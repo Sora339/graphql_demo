@@ -27,7 +27,7 @@ export type CreateUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createSample?: Maybe<SampleData>;
+  createSample?: Maybe<Sample>;
   createUser?: Maybe<User>;
 };
 
@@ -43,9 +43,15 @@ export type MutationCreateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  sampleData?: Maybe<SampleData>;
+  sample?: Maybe<Sample>;
+  samples: Array<Sample>;
   user?: Maybe<User>;
   users: Array<User>;
+};
+
+
+export type QuerySampleArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -53,8 +59,8 @@ export type QueryUserArgs = {
   id: Scalars['ID']['input'];
 };
 
-export type SampleData = {
-  __typename?: 'SampleData';
+export type Sample = {
+  __typename?: 'Sample';
   content: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -69,10 +75,17 @@ export type User = {
   name: Scalars['String']['output'];
 };
 
-export type SampleDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSamplesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SampleDataQuery = { __typename?: 'Query', sampleData?: { __typename?: 'SampleData', id: string, title: string, content: string, createdAt: string } | null };
+export type GetSamplesQuery = { __typename?: 'Query', samples: Array<{ __typename?: 'Sample', id: string, title: string, content: string, createdAt: string }> };
+
+export type GetSampleQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetSampleQuery = { __typename?: 'Query', sample?: { __typename?: 'Sample', id: string, title: string, content: string, createdAt: string } | null };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -84,9 +97,10 @@ export type CreateSampleMutationVariables = Exact<{
 }>;
 
 
-export type CreateSampleMutation = { __typename?: 'Mutation', createSample?: { __typename?: 'SampleData', id: string, title: string, content: string, createdAt: string } | null };
+export type CreateSampleMutation = { __typename?: 'Mutation', createSample?: { __typename?: 'Sample', id: string, title: string, content: string, createdAt: string } | null };
 
 
-export const SampleDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sampleData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<SampleDataQuery, SampleDataQueryVariables>;
+export const GetSamplesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSamples"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"samples"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetSamplesQuery, GetSamplesQueryVariables>;
+export const GetSampleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSample"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sample"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetSampleQuery, GetSampleQueryVariables>;
 export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
 export const CreateSampleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSample"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateSampleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSample"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<CreateSampleMutation, CreateSampleMutationVariables>;

@@ -1,12 +1,15 @@
 "use server";
 
 import { revalidateTag } from 'next/cache';
+import { getClient } from '@/lib/graphql/client';
+import { SamplesQuery, CreateSampleMutation } from '@/lib/graphql/queries';
 
 // 型定義
 interface Sample {
   id: string;
   title: string;
   content: string;
+  createdAt: string;
 }
 
 interface SampleData {
@@ -39,16 +42,19 @@ export async function createSampleAction(formData: FormData) {
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
 
-    // GraphQLミューテーションを実行（実際のミューテーションに置き換えてください）
-    // const client = getClient();
+    // GraphQLミューテーションを実行
+    const client = getClient();
     
-    // 実際のミューテーションの例：
-    // const result = await client.mutation(CreateSampleMutation, {
-    //   input: { title, content }
-    // });
+    const result = await client.mutation(CreateSampleMutation, {
+      input: { title, content }
+    }).toPromise();
 
-    // サンプルのレスポンス
-    console.log('Form submitted:', { title, content });
+    if (result.error) {
+      console.error('GraphQL mutation error:', result.error);
+      return;
+    }
+
+    console.log('Sample created:', result.data);
 
     // 成功時はキャッシュを無効化
     revalidateTag('samples');
@@ -62,23 +68,23 @@ export async function createSampleAction(formData: FormData) {
 // データ取得のServer Action
 export async function getSampleData(): Promise<ApiResult<SampleData>> {
   try {
-    // const client = getClient();
+    const client = getClient();
     
-    // 実際のクエリの例：
-    // const result = await client.query(SampleQuery, {});
+    // GraphQLクエリを実行
+    const result = await client.query(SamplesQuery, {}).toPromise();
 
-    // サンプルのレスポンス
-    const result = {
-      data: {
-        samples: [
-          { id: '1', title: 'Sample 1', content: 'Content 1' },
-          { id: '2', title: 'Sample 2', content: 'Content 2' },
-        ]
-      }
-    };
+    if (result.error) {
+      console.error('GraphQL error:', result.error);
+      return toApiResult({ error: new Error(result.error.message) });
+    }
 
-    return toApiResult(result);
+    return toApiResult({ 
+      data: { 
+        samples: result.data?.samples || [] 
+      } 
+    });
   } catch (error) {
+    console.error('Error fetching samples:', error);
     return toApiResult({ error: error as Error });
   }
 }

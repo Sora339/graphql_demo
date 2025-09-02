@@ -1,9 +1,20 @@
 import { graphql } from '@/gql';
 
 // サンプルクエリ - スキーマに対応
-export const SampleDataQuery = graphql(`
-  query SampleData {
-    sampleData {
+export const SamplesQuery = graphql(`
+  query GetSamples {
+    samples {
+      id
+      title
+      content
+      createdAt
+    }
+  }
+`);
+
+export const SampleQuery = graphql(`
+  query GetSample($id: ID!) {
+    sample(id: $id) {
       id
       title
       content
